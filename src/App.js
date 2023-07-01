@@ -1,18 +1,26 @@
 import './App.css';
 import Header from './components/Header';
 import 'bootstrap/dist/css/bootstrap.css';
-import {React , useState, useEffect } from 'react';
-
-
+import { React, useState, useEffect } from 'react';
+import Game from './components/Game';
+import { Col, Row, Container } from 'react-bootstrap';
+import Favorites from './components/Favorites';
 
 function App() {
-  const API_KEY = 'bdb7304562msh74e239fa497b009p178d7ajsnab646b11f3d8';
-  const API_HOST = 'free-to-play-games-database.p.rapidapi.com';
-  
-  //Hook url game 
-  const [games, setRecommended ] = useState([]);
-  
-  useEffect (() => {
+  // Api headers
+  const API_KEY = '';
+  const API_HOST = '';
+
+  // LocalStorage para guardados en favoritos.
+  const saveFavGames = JSON.parse(localStorage.getItem("favGames")) || [];
+  const [favGames, setFavGames] = useState(saveFavGames);
+  useEffect(() => {
+    localStorage.setItem("favGames", JSON.stringify(favGames))
+  }, [saveFavGames]);
+
+  // Hook para los juegos recomendados por relevancia rnd.
+  const [recommendedGames, setRecommended] = useState([]);
+  useEffect(() => {
     const headers = {
       method: 'GET',
       headers: {
@@ -22,28 +30,44 @@ function App() {
     };
     const fetchData = async () => {
       try {
-        const response = await fetch('https://free-to-play-games-database.p.rapidapi.com/api/games?sort-by=relevance',headers);
-        const data = await response.json();
-        const randomGames = data.sort(() => Math.random() - 0.5).slice(0, 3);
-        setRecommended(randomGames)
-        console.log(randomGames)
+        const responseRecommended = await fetch('https://free-to-play-games-database.p.rapidapi.com/api/games?sort-by=relevant', headers);
+        const dataRecommended = await responseRecommended.json();
+        const randomGamesRecommended = dataRecommended.sort(() => Math.random() - 0.5).slice(0, 3);
+        setRecommended(randomGamesRecommended)
       } catch (error) {
         console.log(error);
       }
     };
     fetchData();
-  },[]);
+  }, []);
 
   return (
-      <>
-      <Header/>
-      <h1>Recomendaciones:</h1>
-      {
-        games.map((game) => (
-          <li key={game.id}>{game.title}</li>
-        ))
-      }
-      </>
+    <>
+      <Header />
+      
+      <Container style={{border:'1px solid black'}}>
+      <h3>Recomendaciones:</h3>
+        <Row>
+        {
+          recommendedGames.map((game) => (
+            <Col className="d-flex justify-content-center" style={{border:'1px solid black'}}>
+              <Game
+                key={game.id}
+                game={game}
+                setFavGames={setFavGames}
+                favGames={favGames}
+                type='card'
+              />
+            </Col>
+          ))
+        }
+        </Row>
+        <Favorites
+            favGames={favGames}
+            setFavGames={setFavGames}
+        />
+      </Container>
+    </>
   );
 }
 
