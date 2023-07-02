@@ -4,9 +4,9 @@ import FavoriteButton from './FavoriteButton';
 const GameCard = ({ game, favGames, setFavGames }) => {
     return (
         <>
-            <Card style={{ width: '24rem' }} key={game.id} className='bg-secondary text-light'>
-                <Card.Img variant="top" src={game.thumbnail} />
-                <Card.Body >
+            <Card style={{ minHeight: '100%' }} key={game.id} className='bg-secondary text-light'>
+                <Card.Img src={game.thumbnail} />
+                <Card.Body className='d-flex flex-column'>
                     <div className='d-flex justify-content-between'>
                         <Card.Title>{game.title}</Card.Title>
                         <FavoriteButton
@@ -15,13 +15,13 @@ const GameCard = ({ game, favGames, setFavGames }) => {
                             game={game}
                         />
                     </div>
-                    <Stack direction="horizontal" gap={2}>
-                        <Badge bg="primary">{game.genre}</Badge>
-                        <Badge bg="light text-dark">{game.platform}</Badge>
-
-                    </Stack>
+                    <div className='mt-auto align-self-start'>
+                        <Stack direction="horizontal" gap={1}>
+                            <Badge bg="primary">{game.genre}</Badge>
+                            <Badge bg="light text-dark">{game.platform}</Badge>
+                        </Stack>
+                    </div>
                 </Card.Body>
-
             </Card>
         </>
     );

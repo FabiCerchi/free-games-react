@@ -27,13 +27,12 @@ const FavoriteGame = ({ favGames, setFavGames }) => {
                             <div className='d-flex'>
                                 <img src={game.thumbnail} style={{ width: '10rem' }} />
                                 <div className='ms-2 d-flex flex-column'>
-                                    <div className='align-self-start' style={{ height: '4rem', width: '12rem' }}>
+                                    <div className='align-self-start' style={{ height: '4rem', width: '100%' }}>
                                         <p style={{ height: '2.8rem', fontSize: '.6rem', overflow: 'hidden', textOverflow: 'ellipsis', }} className='m-0'>{game.short_description}</p>
                                         <Badge bg="light text-dark">{game.platform}</Badge>
                                     </div>
                                     <div className='mt-2 d-flex justify-content-between align-items-end'>
                                         <Badge bg="primary">{game.genre}</Badge>
-
                                         <FavoriteButton
                                             favGames={favGames}
                                             setFavGames={setFavGames}

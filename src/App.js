@@ -92,22 +92,22 @@ function App() {
       />
       <Container className='mt-5' style={{border:'1px solid black'}}>
         <h3 className='container'>Recomendados</h3>
-        <div className='d-flex justify-content-center' style={{border:'1px solid black'}}>
+        <Row className="align-items-stretch">
           {
             recommendedGames.map((game) => (
-              <div className="m-3">
+              <Col className='mt-2' style={{}}>
                 <GameCard
                   key={game.id}
                   game={game}
                   setFavGames={setFavGames}
                   favGames={favGames}
-                  type='card'
                 />
-              </div>
+              </Col>
             ))
           }
-        </div>
+        </Row>
       </Container>
+      {/* 
       <Container className='mt-5'>
         <h3 id="gameslist" className='container text-capitalize'>{gamesTitle}</h3>
         {
@@ -146,7 +146,7 @@ function App() {
           </Pagination>
         </Container>
       </Container>
-
+            */}
     </>
   );
 }
