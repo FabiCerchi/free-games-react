@@ -2,7 +2,7 @@ import React from 'react';
 import FavoriteButton from './FavoriteButton';
 import { Badge } from 'react-bootstrap';
 
-const ItemGame = ({ game, favGames, setFavGames }) => {
+const GameItem = ({ game, favGames, setFavGames }) => {
     return (
         <>
             <div className="d-flex bg-secondary mt-3" style={{ height: '8rem' }} key={game.key}>
@@ -26,4 +26,4 @@ const ItemGame = ({ game, favGames, setFavGames }) => {
     );
 };
 
-export default ItemGame;
+export default GameItem;

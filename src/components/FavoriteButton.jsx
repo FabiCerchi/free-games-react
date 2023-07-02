@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from 'react-bootstrap';
+import { Badge } from 'react-bootstrap';
 const FavoriteButton = ({ game, favGames, setFavGames }) => {
 
     const addFavorite = (id) => {
@@ -21,25 +21,21 @@ const FavoriteButton = ({ game, favGames, setFavGames }) => {
         <>
             {
                 !game.fav ? (
-                    <Button
-                        className='d-flex justify-content-center align-items-center'
-                        style={{ height: '1.3rem', width: '1.3rem' }}
-                        variant='success'
-                        type="button"
+                    <Badge
+                        style={{maxHeight:'1.4rem'}}
+                        bg="success"
                         onClick={() => addFavorite(game.id)}
                     >
-                        +
-                    </Button>
+                    Favoritos
+                    </Badge>
                 ) : (
-                    <Button
-                        className='d-flex justify-content-center align-items-center'
-                        style={{ height: '1.3rem', width: '1.3rem' }}
-                        variant='danger'
-                        type="button"
+                    <Badge
+                        style={{maxHeight:'1.4rem'}}
+                        bg='danger'
                         onClick={() => removeFavorite(game.id)}
                     >
-                        <span>-</span>
-                    </Button>
+                    Remover
+                    </Badge>
                 )
             }
         </>

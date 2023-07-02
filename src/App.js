@@ -3,8 +3,8 @@ import Header from './components/Header';
 import 'bootstrap/dist/css/bootstrap.css';
 import { React, useState, useEffect } from 'react';
 import { Col, Row, Container, Pagination } from 'react-bootstrap';
-import CardGame from './components/CardGame';
-import ItemGame from './components/ItemGame';
+import GameCard from './components/GameCard';
+import GameItem from './components/GameItem';
 
 function App() {
   // Api headers
@@ -90,29 +90,29 @@ function App() {
         setFavGames={setFavGames}
         releaseDateAlphabeticalRelevance={releaseDateAlphabeticalRelevance}
       />
-      <Container className='mt-5'>
+      <Container className='mt-5' style={{border:'1px solid black'}}>
         <h3 className='container'>Recomendados</h3>
-        <Row>
+        <div className='d-flex justify-content-center' style={{border:'1px solid black'}}>
           {
             recommendedGames.map((game) => (
-              <Col className="d-flex justify-content-center">
-                <CardGame
+              <div className="m-3">
+                <GameCard
                   key={game.id}
                   game={game}
                   setFavGames={setFavGames}
                   favGames={favGames}
                   type='card'
                 />
-              </Col>
+              </div>
             ))
           }
-        </Row>
+        </div>
       </Container>
       <Container className='mt-5'>
         <h3 id="gameslist" className='container text-capitalize'>{gamesTitle}</h3>
         {
           currentGames.map((game) => (
-            <ItemGame
+            <GameItem
               key={game.id}
               game={game}
               setFavGames={setFavGames}
