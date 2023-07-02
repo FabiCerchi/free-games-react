@@ -1,6 +1,7 @@
 import React from 'react';
 import { Navbar, Nav, Button, Container, Form, NavDropdown, Row, Col } from 'react-bootstrap';
 import FavoriteGame from "./FavoriteGame";
+import './styles.css';
 
 const Header = ({ favGames, setFavGames, releaseDateAlphabeticalRelevance }) => {
     return (
@@ -26,6 +27,7 @@ const Header = ({ favGames, setFavGames, releaseDateAlphabeticalRelevance }) => 
                                 </NavDropdown.Item>
                             </NavDropdown>
                             <Nav.Link 
+                                href='#gameslist'
                                 onClick={ () => releaseDateAlphabeticalRelevance('release-date')}
                                 >Top 2023</Nav.Link>
                             <Nav.Link href="#action2">Contact</Nav.Link>
@@ -46,17 +48,9 @@ const Header = ({ favGames, setFavGames, releaseDateAlphabeticalRelevance }) => 
                     </Navbar.Collapse>
                 </Container>
             </Navbar>
-            <div className="hero bg-dark text-light d-flex align-items-center text-center" style={{border:'1px solid black', height:'24rem'}}>
+            <div className="hero bg-dark text-light d-flex align-items-center text-center background" style={{ height:'22rem'}}>
                 <Container>
-                    <Row>
-                        <Col>
-                            <h1 className="hero-title">Bienvenido a mi Aplicación</h1>
-                            <p className="hero-description">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum nec nisl ac felis sollicitudin consequat.
-                            </p>
-                            <Button variant="primary" className="hero-button">Comenzar</Button>
-                        </Col>
-                    </Row>
+                    <h1><strong>Good Game</strong></h1>
                 </Container>
             </div>
         </>

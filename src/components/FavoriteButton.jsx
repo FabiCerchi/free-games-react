@@ -23,7 +23,7 @@ const FavoriteButton = ({ game, favGames, setFavGames }) => {
                 !game.fav ? (
                     <Button
                         className='d-flex justify-content-center align-items-center'
-                        style={{ height: '30px', width: '30px' }}
+                        style={{ height: '1.3rem', width: '1.3rem' }}
                         variant='success'
                         type="button"
                         onClick={() => addFavorite(game.id)}
@@ -33,7 +33,7 @@ const FavoriteButton = ({ game, favGames, setFavGames }) => {
                 ) : (
                     <Button
                         className='d-flex justify-content-center align-items-center'
-                        style={{ height: '30px', width: '30px' }}
+                        style={{ height: '1.3rem', width: '1.3rem' }}
                         variant='danger'
                         type="button"
                         onClick={() => removeFavorite(game.id)}

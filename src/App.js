@@ -65,12 +65,18 @@ function App() {
 
   //Paginador
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10; // Cantidad de juegos por página
+  const itemsPerPage = 6; // Cantidad de juegos por página
+  const maxPageNumbers = 5; // Cantidad máxima de números de página mostrados
 
   // Calcular índices de inicio y fin para los juegos de la página actual
   const indexOfLastGame = currentPage * itemsPerPage;
   const indexOfFirstGame = indexOfLastGame - itemsPerPage;
   const currentGames = games.slice(indexOfFirstGame, indexOfLastGame);
+
+  // Calcular el rango de números de página a mostrar
+  const totalPages = Math.ceil(games.length / itemsPerPage);
+  const startPage = Math.max(1, currentPage - Math.floor(maxPageNumbers / 2));
+  const endPage = Math.min(startPage + maxPageNumbers - 1, totalPages);
 
   // Función para cambiar de página
   const handlePageChange = (pageNumber) => {
@@ -84,7 +90,7 @@ function App() {
         setFavGames={setFavGames}
         releaseDateAlphabeticalRelevance={releaseDateAlphabeticalRelevance}
       />
-      <Container>
+      <Container className='mt-5'>
         <h3 className='container'>Recomendados</h3>
         <Row>
           {
@@ -102,8 +108,8 @@ function App() {
           }
         </Row>
       </Container>
-      <Container>
-        <h3 className='container text-capitalize'>{gamesTitle}</h3>
+      <Container className='mt-5'>
+        <h3 id="gameslist" className='container text-capitalize'>{gamesTitle}</h3>
         {
           currentGames.map((game) => (
             <ItemGame
@@ -115,18 +121,32 @@ function App() {
             />
           ))
         }
-        <Pagination>
-          {Array.from({ length: Math.ceil(games.length / itemsPerPage) }).map((_, index) => (
-            <Pagination.Item
-              key={index}
-              active={currentPage === index + 1}
-              onClick={() => handlePageChange(index + 1)}
-            >
-              {index + 1}
-            </Pagination.Item>
-          ))}
-        </Pagination>
+        <Container className='d-flex justify-content-center mt-2'>
+          <Pagination>
+            <Pagination.Prev
+              onClick={() => handlePageChange(currentPage - 1)}
+              disabled={currentPage === 1}
+            />
+            {Array.from({ length: endPage - startPage + 1 }).map((_, index) => {
+              const pageNumber = startPage + index;
+              return (
+                <Pagination.Item
+                  key={pageNumber}
+                  active={pageNumber === currentPage}
+                  onClick={() => handlePageChange(pageNumber)}
+                >
+                  {pageNumber}
+                </Pagination.Item>
+              );
+            })}
+            <Pagination.Next
+              onClick={() => handlePageChange(currentPage + 1)}
+              disabled={currentPage === totalPages}
+            />
+          </Pagination>
+        </Container>
       </Container>
+
     </>
   );
 }
