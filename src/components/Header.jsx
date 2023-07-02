@@ -1,7 +1,7 @@
 import React from 'react';
-import { Navbar, Nav, Button, Container, Form, NavDropdown } from 'react-bootstrap';
-
-const Header = () => {
+import { Navbar, Nav, Button, Container, Form, NavDropdown, Row, Col } from 'react-bootstrap';
+import Favorites from "./Favorites";
+const Header = ({ favGames, setFavGames }) => {
     return (
         <>
             <Navbar expand="lg" bg="dark" data-bs-theme="dark">
@@ -35,10 +35,27 @@ const Header = () => {
                                 aria-label="Search"
                             />
                             <Button variant="outline-success">Search</Button>
+                            <Favorites
+                                favGames={favGames}
+                                setFavGames={setFavGames}
+                            />
                         </Form>
                     </Navbar.Collapse>
                 </Container>
             </Navbar>
+            <div className="hero bg-dark text-light d-flex align-items-center text-center" style={{border:'1px solid black', height:'24rem'}}>
+                <Container>
+                    <Row>
+                        <Col>
+                            <h1 className="hero-title">Bienvenido a mi Aplicación</h1>
+                            <p className="hero-description">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum nec nisl ac felis sollicitudin consequat.
+                            </p>
+                            <Button variant="primary" className="hero-button">Comenzar</Button>
+                        </Col>
+                    </Row>
+                </Container>
+            </div>
         </>
     );
 };

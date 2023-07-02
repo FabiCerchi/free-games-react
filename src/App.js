@@ -8,8 +8,7 @@ import Favorites from './components/Favorites';
 
 function App() {
   // Api headers
-  const API_KEY = '';
-  const API_HOST = '';
+
 
   // LocalStorage para guardados en favoritos.
   const saveFavGames = JSON.parse(localStorage.getItem("favGames")) || [];
@@ -43,29 +42,27 @@ function App() {
 
   return (
     <>
-      <Header />
-      
-      <Container style={{border:'1px solid black'}}>
-      <h3>Recomendaciones:</h3>
+      <Header
+        favGames={favGames}
+        setFavGames={setFavGames}
+      />
+      <Container>
+        <h3>Recomendaciones:</h3>
         <Row>
-        {
-          recommendedGames.map((game) => (
-            <Col className="d-flex justify-content-center" style={{border:'1px solid black'}}>
-              <Game
-                key={game.id}
-                game={game}
-                setFavGames={setFavGames}
-                favGames={favGames}
-                type='card'
-              />
-            </Col>
-          ))
-        }
+          {
+            recommendedGames.map((game) => (
+              <Col className="d-flex justify-content-center">
+                <Game
+                  key={game.id}
+                  game={game}
+                  setFavGames={setFavGames}
+                  favGames={favGames}
+                  type='card'
+                />
+              </Col>
+            ))
+          }
         </Row>
-        <Favorites
-            favGames={favGames}
-            setFavGames={setFavGames}
-        />
       </Container>
     </>
   );

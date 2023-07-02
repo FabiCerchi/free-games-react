@@ -1,46 +1,57 @@
-import React from 'react';
-import { Container, ListGroup, Card, Col } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Container, ListGroup, Card, Col, Button } from 'react-bootstrap';
 
 const Game = ({ game, favGames, setFavGames, type }) => {
     const { id, title, thumbnail, game_url, genre, plataform, publisher, release } = game;
-    
+
+    const [isFavorite, setFavorite] = useState(false);
+
+
     const addFavorite = (id) => {
-        const favGame = favGames.filter( game => game.id === id)
-        if (favGame.length === 0){
+        const favGame = favGames.filter(game => game.id === id)
+        if (favGame.length === 0) {
+            game.fav = true
             setFavGames([...favGames, game])
         }
-        console.log(favGames)
     };
-    
+
     const removeFavorite = (id) => {
-        const newFavGames = favGames.filter( game => game.id !== id)
+        const newFavGames = favGames.filter(game => game.id !== id)
         setFavGames(newFavGames)
-        console.log(favGames)
+        //
+        game.fav = false
+        return game
     };
+
     return (
         <>
-            <Card style={{ width: '24rem'}} key={id}>
+            <Card style={{ width: '24rem' }} key={id} className='bg-secondary text-light'>
                 <Card.Img variant="top" src={thumbnail} />
-                <Card.Body>
+                <Card.Body className='d-flex justify-content-between'>
                     <Card.Title>{title}</Card.Title>
-                    <Card.Text>
-                        Some quick example text to build on the card title and make up the
-                        bulk of the card's content.
-                    </Card.Text>
-                </Card.Body>
-                <ListGroup className="list-group-flush">
-                    <ListGroup.Item>{genre}</ListGroup.Item>
-                    <ListGroup.Item>{plataform}</ListGroup.Item>
-                    <ListGroup.Item>{publisher}</ListGroup.Item>
-                    <ListGroup.Item>{release}</ListGroup.Item>
-                </ListGroup>
-                <Card.Body>
-                    <Card.Link href="#"
-                        type='button'
-                        onClick={() => addFavorite(id)}>Add Favorite</Card.Link>
-                    <Card.Link href="#"
-                        type="button"
-                        onClick={() => removeFavorite(id)}>Remove Favorite</Card.Link>
+                    {
+                        !game.fav ? (
+                            <Button
+                                className='d-flex justify-content-center align-items-center'
+                                style={{ height: '30px', width: '30px' }}
+                                variant='success'
+                                type="button"
+                                onClick={() => addFavorite(id)}
+                            >
+                                +
+                            </Button>
+                        ) : (
+                            <Button
+                                className='d-flex justify-content-center align-items-center'
+                                style={{ height: '30px', width: '30px' }}
+                                variant='danger'
+                                type="button"
+                                onClick={() => removeFavorite(id)}
+                            >
+                                <span>-</span>
+                            </Button>
+                        )
+                    }
                 </Card.Body>
             </Card>
         </>

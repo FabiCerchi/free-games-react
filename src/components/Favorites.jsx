@@ -9,17 +9,16 @@ const Favorites = ({ favGames, setFavGames }) => {
     const handleShow = () => setShow(true);
 
     const removeFavorite = (id) => {
+        const game = favGames.find(game => game.id === id)
+        game.fav = false
         const newFavGames = favGames.filter(game => game.id !== id)
         setFavGames(newFavGames)
-        console.log(favGames)
+        return game
     };
 
-    const removeFavorites = () => {
-        setFavGames([])
-    }
     return (
         <>
-            <Button variant="primary" onClick={handleShow} className="me-2">
+            <Button variant="outline-success" onClick={handleShow} className="me-2">
                 Favoritos
             </Button>
             <Offcanvas show={show} onHide={handleClose} placement='end' bg="dark" data-bs-theme="dark">
@@ -43,18 +42,6 @@ const Favorites = ({ favGames, setFavGames }) => {
                         </div>
 
                     ))}
-                    {
-                        favGames.length !== 0 && (
-                            <Button
-                                className="mt-4"
-                                variant="danger"
-                                type="button"
-                                onClick={() => removeFavorites()}
-                            >
-                                Remover Todo
-                            </Button>
-                        )
-                    }
                 </Offcanvas.Body>
             </Offcanvas>
         </>
