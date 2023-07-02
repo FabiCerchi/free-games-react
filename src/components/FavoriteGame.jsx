@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 
-const Favorites = ({ favGames, setFavGames }) => {
+const FavoriteGame = ({ favGames, setFavGames }) => {
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
@@ -48,4 +48,4 @@ const Favorites = ({ favGames, setFavGames }) => {
     );
 };
 
-export default Favorites;
+export default FavoriteGame;

@@ -1,7 +1,8 @@
 import React from 'react';
 import { Navbar, Nav, Button, Container, Form, NavDropdown, Row, Col } from 'react-bootstrap';
-import Favorites from "./Favorites";
-const Header = ({ favGames, setFavGames }) => {
+import FavoriteGame from "./FavoriteGame";
+
+const Header = ({ favGames, setFavGames, releaseDateAlphabeticalRelevance }) => {
     return (
         <>
             <Navbar expand="lg" bg="dark" data-bs-theme="dark">
@@ -24,7 +25,9 @@ const Header = ({ favGames, setFavGames }) => {
                                     Something else here
                                 </NavDropdown.Item>
                             </NavDropdown>
-                            <Nav.Link href="#action1">Top 2023</Nav.Link>
+                            <Nav.Link 
+                                onClick={ () => releaseDateAlphabeticalRelevance('release-date')}
+                                >Top 2023</Nav.Link>
                             <Nav.Link href="#action2">Contact</Nav.Link>
                         </Nav>
                         <Form className="d-flex">
@@ -35,7 +38,7 @@ const Header = ({ favGames, setFavGames }) => {
                                 aria-label="Search"
                             />
                             <Button variant="outline-success">Search</Button>
-                            <Favorites
+                            <FavoriteGame
                                 favGames={favGames}
                                 setFavGames={setFavGames}
                             />
