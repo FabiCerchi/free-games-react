@@ -1,12 +1,16 @@
 import { Card, Badge, Stack } from 'react-bootstrap';
+import { React } from 'react';
 import FavoriteButton from './FavoriteButton';
-
-const GameCard = ({ game, favGames, setFavGames }) => {
+const GameCard = ({ game, favGames, setFavGames, getSpecificGame }) => {
     return (
         <>
-            <Card style={{ minHeight: '100%' }} key={game.id} className='bg-secondary text-light'>
-                <Card.Img src={game.thumbnail} />
-                <Card.Body className='d-flex flex-column'>
+            <Card style={{ minHeight: '100%' }} key={game.id} className='bg-secondary text-light zoom-in'>
+
+                <div className='gradle-container' onClick={() => getSpecificGame(game.id)}>
+                    <Card.Img src={game.thumbnail} />
+                </div>
+
+                <Card.Body className='d-flex flex-column' >
                     <div className='d-flex justify-content-between'>
                         <Card.Title>{game.title}</Card.Title>
                         <FavoriteButton

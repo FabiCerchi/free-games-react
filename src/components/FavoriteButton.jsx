@@ -22,6 +22,7 @@ const FavoriteButton = ({ game, favGames, setFavGames }) => {
             {
                 !game.fav ? (
                     <Badge
+                        className='favorite-button'
                         style={{maxHeight:'1.4rem'}}
                         bg="success"
                         onClick={() => addFavorite(game.id)}
@@ -30,6 +31,7 @@ const FavoriteButton = ({ game, favGames, setFavGames }) => {
                     </Badge>
                 ) : (
                     <Badge
+                        className='favorite-button'
                         style={{maxHeight:'1.4rem'}}
                         bg='danger'
                         onClick={() => removeFavorite(game.id)}

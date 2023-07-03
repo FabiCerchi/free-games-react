@@ -17,10 +17,8 @@ const GameItem = ({ game, favGames, setFavGames }) => {
                     <p className='m-0'>{game.short_description}</p>
                     <h5>
                         <Badge bg="primary">{game.genre}</Badge>
-
                     </h5>
                 </div>
-
             </div>
         </>
     );

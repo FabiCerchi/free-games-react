@@ -3,7 +3,7 @@ import { Button, Badge } from 'react-bootstrap';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import FavoriteButton from './FavoriteButton';
 
-const FavoriteGame = ({ favGames, setFavGames }) => {
+const FavoriteGame = ({ favGames, setFavGames, getSpecificGame }) => {
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
@@ -25,7 +25,9 @@ const FavoriteGame = ({ favGames, setFavGames }) => {
                         <div key={game.id} style={{ height: '9rem' }} className='mt-1'>
                             <h5><strong>{game.title}</strong></h5>
                             <div className='d-flex'>
-                                <img src={game.thumbnail} style={{ width: '10rem' }} />
+                                <div className='gradle-container' onClick={() => getSpecificGame(game.id)}>
+                                    <img src={game.thumbnail} style={{ width: '10rem' }} />
+                                </div>
                                 <div className='ms-2 d-flex flex-column'>
                                     <div className='align-self-start' style={{ height: '4rem', width: '100%' }}>
                                         <p style={{ height: '2.8rem', fontSize: '.6rem', overflow: 'hidden', textOverflow: 'ellipsis', }} className='m-0'>{game.short_description}</p>

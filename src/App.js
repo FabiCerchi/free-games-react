@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import { React, useState, useEffect } from 'react';
 import { Col, Row, Container, Pagination } from 'react-bootstrap';
 import GameCard from './components/GameCard';
-import GameItem from './components/GameItem';
+import GameModal from './components/GameModal';
 
 function App() {
   // Api headers
@@ -53,8 +53,8 @@ function App() {
   const releaseDateAlphabeticalRelevance = async (type) => {
     try {
       const response = await fetch('https://free-to-play-games-database.p.rapidapi.com/api/games?sort-by=release-date', headers);
-      const data = await response.json();
-      const games = data.sort(() => Math.random() - 0.5);
+      const games = await response.json();
+      //const games = data.sort(() => Math.random() - 0.5);
       console.log('Ingrese')
       setGamesTitle(type)
       setGames(games)
@@ -62,6 +62,35 @@ function App() {
       console.log(error);
     }
   };
+  
+  // 
+  const [showModal, setShowModal] = useState(false);
+  const [fullGame, setFullGame] = useState([]);
+
+  const handleOpenModal = () => {
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+
+  // Get By ID
+  const getSpecificGame = async (gameId) => {
+    try {
+      const response = await fetch('https://free-to-play-games-database.p.rapidapi.com/api/game?id='+ gameId, headers);
+      const game = await response.json();
+      //const games = data.sort(() => Math.random() - 0.5);
+      setFullGame(game);
+      handleOpenModal();
+      console.log(game)
+      console.log('Ingrese')
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+
 
   //Paginador
   const [currentPage, setCurrentPage] = useState(1);
@@ -85,22 +114,35 @@ function App() {
 
   return (
     <>
+      {
+        showModal && (
+          <GameModal
+          show={showModal}
+          onHide={handleCloseModal}
+          fullGame={fullGame}
+        />
+        )
+      }
+
       <Header
         favGames={favGames}
         setFavGames={setFavGames}
         releaseDateAlphabeticalRelevance={releaseDateAlphabeticalRelevance}
+        getSpecificGame={getSpecificGame}
       />
-      <Container className='mt-5' style={{border:'1px solid black'}}>
-        <h3 className='container'>Recomendados</h3>
-        <Row className="align-items-stretch">
+      {/* RECOMENDADOS */}
+      <Container className='mt-5'>
+        <Row className="align-items-stretch mt-3">
+          <h3 className='container'><strong>Recomendados</strong></h3>
           {
             recommendedGames.map((game) => (
-              <Col className='mt-2' style={{}}>
+              <Col className='mt-2'>
                 <GameCard
                   key={game.id}
                   game={game}
                   setFavGames={setFavGames}
                   favGames={favGames}
+                  getSpecificGame={getSpecificGame}
                 />
               </Col>
             ))

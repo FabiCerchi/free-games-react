@@ -3,7 +3,7 @@ import { Navbar, Nav, Button, Container, Form, NavDropdown, Row, Col } from 'rea
 import FavoriteGame from "./FavoriteGame";
 import './styles.css';
 
-const Header = ({ favGames, setFavGames, releaseDateAlphabeticalRelevance }) => {
+const Header = ({ favGames, setFavGames, releaseDateAlphabeticalRelevance, getSpecificGame }) => {
     return (
         <>
             <Navbar expand="lg" bg="dark" data-bs-theme="dark">
@@ -43,12 +43,13 @@ const Header = ({ favGames, setFavGames, releaseDateAlphabeticalRelevance }) => 
                             <FavoriteGame
                                 favGames={favGames}
                                 setFavGames={setFavGames}
+                                getSpecificGame={getSpecificGame}
                             />
                         </Form>
                     </Navbar.Collapse>
                 </Container>
             </Navbar>
-            <div className="hero bg-dark text-light d-flex align-items-center text-center background" style={{ height:'22rem'}}>
+            <div className="hero bg-dark text-light d-flex align-items-center text-center background border-bottom" style={{ height:'22rem'}}>
                 <Container>
                     <h1><strong>Good Game</strong></h1>
                 </Container>
