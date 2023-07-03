@@ -32,9 +32,11 @@ function App() {
     fetchData();
   }, []);
 
-  // Hook para los juegos recien adheridos.
+  // Hook para cargar los juegos al ingresar.
   const [games, setGames] = useState([]);
-  const [gamesTitle, setGamesTitle] = useState('Recien Adheridos');
+  // Hook para titulo inicial
+  const [gamesTitle, setGamesTitle] = useState('Juegos Gratis');
+  // Use Efect para asignar los juegos al ingresar
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -49,13 +51,11 @@ function App() {
     fetchData();
   }, []);
 
-  //Filtros
+  //Filtros Top2023
   const releaseDateAlphabeticalRelevance = async (type) => {
     try {
       const response = await fetch('https://free-to-play-games-database.p.rapidapi.com/api/games?sort-by=release-date', headers);
       const games = await response.json();
-      //const games = data.sort(() => Math.random() - 0.5);
-      console.log('Ingrese')
       setGamesTitle(type)
       setGames(games)
     } catch (error) {
@@ -63,10 +63,11 @@ function App() {
     }
   };
   
-  // 
+  // Modal
   const [showModal, setShowModal] = useState(false);
+  //Hook para full game info (Modal)
   const [fullGame, setFullGame] = useState([]);
-
+  // Modal Functions
   const handleOpenModal = () => {
     setShowModal(true);
   };
@@ -75,16 +76,13 @@ function App() {
     setShowModal(false);
   };
 
-  // Get By ID
+  // Get by Id Full game info (modal)
   const getSpecificGame = async (gameId) => {
     try {
       const response = await fetch('https://free-to-play-games-database.p.rapidapi.com/api/game?id='+ gameId, headers);
       const game = await response.json();
-      //const games = data.sort(() => Math.random() - 0.5);
       setFullGame(game);
       handleOpenModal();
-      console.log(game)
-      console.log('Ingrese')
     } catch (error) {
       console.log(error);
     }
