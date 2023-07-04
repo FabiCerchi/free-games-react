@@ -13,7 +13,6 @@ const FavoriteButton = ({ game, favGames, setFavGames }) => {
     const removeFavorite = (id) => {
         const newFavGames = favGames.filter(game => game.id !== id)
         setFavGames(newFavGames)
-        //
         game.fav = false
         return game
     };

@@ -60,7 +60,7 @@ const Header = ({ favGames, setFavGames, requestApi }) => {
                                 <NavDropdown.Item value="relevance" onClick={handleItemClickSortBy}>Relevance</NavDropdown.Item>
                             </NavDropdown>
                         </Nav>
-                        <Form className="d-flex">
+                        <Form className="">
                             <FavoriteGame
                                 favGames={favGames}
                                 setFavGames={setFavGames}

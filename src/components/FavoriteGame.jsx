@@ -16,7 +16,7 @@ const FavoriteGame = ({ favGames, setFavGames, requestApi }) => {
       };
     return (
         <>
-            <Button variant="outline-success" onClick={handleShow} className="me-2">
+            <Button variant="outline-primary" onClick={handleShow} className="me-2">
                 Favoritos
             </Button>
             <Offcanvas show={show} onHide={handleClose} placement='end' bg="dark" data-bs-theme="dark">
@@ -49,7 +49,6 @@ const FavoriteGame = ({ favGames, setFavGames, requestApi }) => {
                                 </div>
                             </div>
                         </div>
-
                     ))}
                 </Offcanvas.Body>
             </Offcanvas>

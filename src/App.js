@@ -93,7 +93,7 @@ function App() {
 
   //Paginador
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 6; // Cantidad de juegos por página
+  const itemsPerPage = 10; // Cantidad de juegos por página
   const maxPageNumbers = 5; // Cantidad máxima de números de página mostrados
 
   // Calcular índices de inicio y fin para los juegos de la página actual
@@ -127,6 +127,7 @@ function App() {
         setFavGames={setFavGames}
         requestApi={requestApi}
       />
+      
       {/* RECOMENDADOS */}
       <Container className='mt-5 mb-5'>
         <Row className="align-items-stretch mt-3">
