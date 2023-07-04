@@ -29,12 +29,15 @@ const GameItem = ({ game, favGames, setFavGames, requestApi }) => {
                                     game={game} />
                             </div>
                             <p>{game.short_description}</p>
+                            <div wrap>
+                                <Badge bg="primary" className='ms-1'>{game.genre}</Badge>
+                                <Badge bg="light text-dark" className='ms-1'>{game.platform}</Badge>
+                                <Badge bg="warning" className='ms-1'>{game.release_date}</Badge>
+                                <a href={game.game_url} target="_blank" rel="noopener noreferrer">
+                                    <Badge bg="dark" className="ms-1">Official Page</Badge>
+                                </a>
+                            </div>
                         </div>
-                        <Stack direction="horizontal" gap={1}>
-                            <Badge bg="primary">{game.genre}</Badge>
-                            <Badge bg="light text-dark">{game.platform}</Badge>
-                            <Badge bg="warning">{game.release_date}</Badge>
-                        </Stack>
                     </Col>
                 </Row>
             </Container >

@@ -9,7 +9,13 @@ import GameItem from './components/GameItem';
 
 function App() {
   // Api headers
-
+  const headers = {
+    method: 'GET',
+    headers: {
+      'X-RapidAPI-Key': process.env.REACT_APP_API_KEY,
+      'X-RapidAPI-Host': process.env.REACT_APP_API_HOST
+    }
+  };
   // LocalStorage para guardados en favoritos.
   const saveFavGames = JSON.parse(localStorage.getItem("favGames")) || [];
   const [favGames, setFavGames] = useState(saveFavGames);
