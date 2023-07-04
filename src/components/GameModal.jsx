@@ -30,7 +30,7 @@ const GameModal = ({ show, onHide, fullGame }) => {
                     </Modal.Body>
                     <Modal.Footer>
                         <Button variant="primary" href={fullGame.game_url} target='_blank'>
-                            Juego
+                            Jugar
                         </Button>
                         <Button variant="secondary" onClick={onHide}>
                             Cerrar
