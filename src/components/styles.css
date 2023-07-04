@@ -44,3 +44,15 @@
   box-shadow: 0 0 10px 5px rgba(182, 182, 212, 0.5); /* Ajusta el color y la intensidad del brillo según tus preferencias */
 }
 
+.custom-modal .modal-content {
+  background-color: #343a40;
+  color: white;
+}
+
+.custom-modal .modal-header {
+  border-bottom-color: white;
+}
+
+.custom-modal .modal-footer {
+  border-top-color: white;
+}

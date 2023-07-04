@@ -5,6 +5,7 @@ import { React, useState, useEffect } from 'react';
 import { Col, Row, Container, Pagination } from 'react-bootstrap';
 import GameCard from './components/GameCard';
 import GameModal from './components/GameModal';
+import GameItem from './components/GameItem';
 
 function App() {
   // Api headers
@@ -12,6 +13,7 @@ function App() {
   // LocalStorage para guardados en favoritos.
   const saveFavGames = JSON.parse(localStorage.getItem("favGames")) || [];
   const [favGames, setFavGames] = useState(saveFavGames);
+
   useEffect(() => {
     localStorage.setItem("favGames", JSON.stringify(favGames))
   }, [saveFavGames]);
@@ -35,12 +37,13 @@ function App() {
   // Hook para cargar los juegos al ingresar.
   const [games, setGames] = useState([]);
   // Hook para titulo inicial
-  const [gamesTitle, setGamesTitle] = useState('Juegos Gratis');
+  const [gamesTitle, setGamesTitle] = useState('Random Popularity');
+
   // Use Efect para asignar los juegos al ingresar
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('https://free-to-play-games-database.p.rapidapi.com/api/games?sort-by=release-date', headers);
+        const response = await fetch('https://free-to-play-games-database.p.rapidapi.com/api/games?sort-by=popularity', headers);
         const data = await response.json();
         const games = data.sort(() => Math.random() - 0.5);
         setGames(games)
@@ -51,18 +54,24 @@ function App() {
     fetchData();
   }, []);
 
-  //Filtros Top2023
-  const releaseDateAlphabeticalRelevance = async (type) => {
+  //Filtros Category - Platform , SortBy
+  const requestApi = async (endPoint, title, modal) => {
     try {
-      const response = await fetch('https://free-to-play-games-database.p.rapidapi.com/api/games?sort-by=release-date', headers);
+      const response = await fetch('https://free-to-play-games-database.p.rapidapi.com/api/' + endPoint, headers);
       const games = await response.json();
-      setGamesTitle(type)
-      setGames(games)
+      if (modal) {
+        setFullGame(games);
+        handleOpenModal();
+      } else {
+        setGamesTitle(title);
+        setCurrentPage(1)
+        setGames(games);
+      }
     } catch (error) {
-      console.log(error);
-    }
+      console.log(error)
+    };
   };
-  
+
   // Modal
   const [showModal, setShowModal] = useState(false);
   //Hook para full game info (Modal)
@@ -75,20 +84,6 @@ function App() {
   const handleCloseModal = () => {
     setShowModal(false);
   };
-
-  // Get by Id Full game info (modal)
-  const getSpecificGame = async (gameId) => {
-    try {
-      const response = await fetch('https://free-to-play-games-database.p.rapidapi.com/api/game?id='+ gameId, headers);
-      const game = await response.json();
-      setFullGame(game);
-      handleOpenModal();
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-
 
   //Paginador
   const [currentPage, setCurrentPage] = useState(1);
@@ -115,23 +110,21 @@ function App() {
       {
         showModal && (
           <GameModal
-          show={showModal}
-          onHide={handleCloseModal}
-          fullGame={fullGame}
-        />
+            show={showModal}
+            onHide={handleCloseModal}
+            fullGame={fullGame}
+          />
         )
       }
-
       <Header
         favGames={favGames}
         setFavGames={setFavGames}
-        releaseDateAlphabeticalRelevance={releaseDateAlphabeticalRelevance}
-        getSpecificGame={getSpecificGame}
+        requestApi={requestApi}
       />
       {/* RECOMENDADOS */}
-      <Container className='mt-5'>
+      <Container className='mt-5 mb-5'>
         <Row className="align-items-stretch mt-3">
-          <h3 className='container'><strong>Recomendados</strong></h3>
+          <h3 className='container'><strong>Recommended</strong></h3>
           {
             recommendedGames.map((game) => (
               <Col className='mt-2'>
@@ -140,16 +133,17 @@ function App() {
                   game={game}
                   setFavGames={setFavGames}
                   favGames={favGames}
-                  getSpecificGame={getSpecificGame}
+                  requestApi={requestApi}
                 />
               </Col>
             ))
           }
         </Row>
       </Container>
-      {/* 
-      <Container className='mt-5'>
-        <h3 id="gameslist" className='container text-capitalize'>{gamesTitle}</h3>
+
+      {/* GAME ITEMS */}
+      <h3 id="gameslist" className='container text-capitalize'><strong>{gamesTitle}</strong></h3>
+      <Container className='mt-3'>
         {
           currentGames.map((game) => (
             <GameItem
@@ -157,11 +151,13 @@ function App() {
               game={game}
               setFavGames={setFavGames}
               favGames={favGames}
-              games={games}
+              requestApi={requestApi}
             />
           ))
         }
-        <Container className='d-flex justify-content-center mt-2'>
+
+        {/* PAGINADOR */}
+        <Container className='d-flex justify-content-center mt-4'>
           <Pagination>
             <Pagination.Prev
               onClick={() => handlePageChange(currentPage - 1)}
@@ -186,7 +182,9 @@ function App() {
           </Pagination>
         </Container>
       </Container>
-            */}
+
+      {/* FOOTER */}
+
     </>
   );
 }

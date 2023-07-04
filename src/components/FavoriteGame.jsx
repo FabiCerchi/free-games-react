@@ -3,12 +3,17 @@ import { Button, Badge } from 'react-bootstrap';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import FavoriteButton from './FavoriteButton';
 
-const FavoriteGame = ({ favGames, setFavGames, getSpecificGame }) => {
+const FavoriteGame = ({ favGames, setFavGames, requestApi }) => {
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
+    const handleImgClickFullGame = (event) => {
+        const gameId = event.currentTarget.getAttribute('data-value');
+        const endPoint = 'game?id='+gameId;
+        requestApi(endPoint,false, true);
+      };
     return (
         <>
             <Button variant="outline-success" onClick={handleShow} className="me-2">
@@ -25,7 +30,7 @@ const FavoriteGame = ({ favGames, setFavGames, getSpecificGame }) => {
                         <div key={game.id} style={{ height: '9rem' }} className='mt-1'>
                             <h5><strong>{game.title}</strong></h5>
                             <div className='d-flex'>
-                                <div className='gradle-container' onClick={() => getSpecificGame(game.id)}>
+                                <div className='gradle-container' data-value={game.id} onClick={handleImgClickFullGame}>
                                     <img src={game.thumbnail} style={{ width: '10rem' }} />
                                 </div>
                                 <div className='ms-2 d-flex flex-column'>

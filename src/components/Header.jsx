@@ -1,14 +1,34 @@
 import React from 'react';
-import { Navbar, Nav, Button, Container, Form, NavDropdown, Row, Col } from 'react-bootstrap';
+import { Navbar, Nav, Container, Form, NavDropdown } from 'react-bootstrap';
 import FavoriteGame from "./FavoriteGame";
 import './styles.css';
 
-const Header = ({ favGames, setFavGames, releaseDateAlphabeticalRelevance, getSpecificGame }) => {
+const Header = ({ favGames, setFavGames, requestApi }) => {
+
+    const handleItemClickCategory = (event) => {
+        const value = event.target.getAttribute("value");
+        const title = event.target.innerText;
+        const endPoint = 'games?category=' + value;
+        requestApi(endPoint, title, false);
+    };
+    const handleItemClickPlatform = (event) => {
+        const value = event.target.getAttribute("value");
+        const title = event.target.innerText;
+        const endPoint = 'games?platform=' + value;
+        requestApi(endPoint, title, false);
+    };
+    const handleItemClickSortBy = (event) => {
+        const value = event.target.getAttribute("value");
+        const title = event.target.innerText;
+        const endPoint = 'games?sort-by=' + value;
+        requestApi(endPoint, title, false);
+    };
+
     return (
         <>
-            <Navbar expand="lg" bg="dark" data-bs-theme="dark">
+            <Navbar expand="lg" bg="dark" data-bs-theme="dark" className='fixed-top'>
                 <Container>
-                    <Navbar.Brand href="#">Free Game</Navbar.Brand>
+                    <Navbar.Brand href="./index.html">Free Games</Navbar.Brand>
                     <Navbar.Toggle aria-controls="navbarScroll" />
                     <Navbar.Collapse id="navbarScroll">
                         <Nav
@@ -17,39 +37,40 @@ const Header = ({ favGames, setFavGames, releaseDateAlphabeticalRelevance, getSp
                             navbarScroll
                         >
                             <NavDropdown title="Categories" id="navbarScrollingDropdown">
-                                <NavDropdown.Item href="#action1">Action</NavDropdown.Item>
-                                <NavDropdown.Item href="#action2">
-                                    Another action
-                                </NavDropdown.Item>
-                                <NavDropdown.Divider />
-                                <NavDropdown.Item href="#action5">
-                                    Something else here
-                                </NavDropdown.Item>
+                                <NavDropdown.Item value="mmorpg" href='#gamelist' onClick={handleItemClickCategory}>MMORPG</NavDropdown.Item>
+                                <NavDropdown.Item value="shooter" onClick={handleItemClickCategory}>Shooter</NavDropdown.Item>
+                                <NavDropdown.Item value="moba" onClick={handleItemClickCategory}>MOBA</NavDropdown.Item>
+                                <NavDropdown.Item value="anime" onClick={handleItemClickCategory}>Anime</NavDropdown.Item>
+                                <NavDropdown.Item value="strategy" onClick={handleItemClickCategory}>Strategy</NavDropdown.Item>
+                                <NavDropdown.Item value="fantasy" onClick={handleItemClickCategory}>Fantasy</NavDropdown.Item>
+                                <NavDropdown.Item value="sci-fi" onClick={handleItemClickCategory}>Sci-Fi</NavDropdown.Item>
+                                <NavDropdown.Item value="action" onClick={handleItemClickCategory}>Action</NavDropdown.Item>
+                                <NavDropdown.Item value="racing" onClick={handleItemClickCategory}>Racing</NavDropdown.Item>
+                                <NavDropdown.Item value="fighting" onClick={handleItemClickCategory}>Fighting</NavDropdown.Item>
                             </NavDropdown>
-                            <Nav.Link 
-                                href='#gameslist'
-                                onClick={ () => releaseDateAlphabeticalRelevance('release-date')}
-                                >Top 2023</Nav.Link>
-                            <Nav.Link href="#action2">Contact</Nav.Link>
+                            <NavDropdown title="Platform" id="navbarScrollingDropdown">
+                                <NavDropdown.Item value="pc" onClick={handleItemClickPlatform}>PC</NavDropdown.Item>
+                                <NavDropdown.Item value="browser" onClick={handleItemClickPlatform}>Browser</NavDropdown.Item>
+                                <NavDropdown.Item value="all" onClick={handleItemClickPlatform}>All</NavDropdown.Item>
+                            </NavDropdown>
+                            <NavDropdown title="SortBy" id="navbarScrollingDropdown">
+                                <NavDropdown.Item value="release-date" onClick={handleItemClickSortBy}>Release Date</NavDropdown.Item>
+                                <NavDropdown.Item value="popularity" onClick={handleItemClickSortBy}>Popularity</NavDropdown.Item>
+                                <NavDropdown.Item value="alphabetical" onClick={handleItemClickSortBy}>Alphabetical</NavDropdown.Item>
+                                <NavDropdown.Item value="relevance" onClick={handleItemClickSortBy}>Relevance</NavDropdown.Item>
+                            </NavDropdown>
                         </Nav>
                         <Form className="d-flex">
-                            <Form.Control
-                                type="search"
-                                placeholder="Search Game"
-                                className="me-2"
-                                aria-label="Search"
-                            />
-                            <Button variant="outline-success">Search</Button>
                             <FavoriteGame
                                 favGames={favGames}
                                 setFavGames={setFavGames}
-                                getSpecificGame={getSpecificGame}
+                                requestApi={requestApi}
                             />
                         </Form>
                     </Navbar.Collapse>
                 </Container>
             </Navbar>
-            <div className="hero bg-dark text-light d-flex align-items-center text-center background border-bottom" style={{ height:'22rem'}}>
+            <div className="hero bg-dark text-light d-flex align-items-center text-center background border-bottom" style={{ height: '28rem' }}>
                 <Container>
                     <h1><strong>Good Game</strong></h1>
                 </Container>
