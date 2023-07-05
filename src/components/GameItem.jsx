@@ -6,8 +6,8 @@ const GameItem = ({ game, removeFavorite, addFavorite, requestApi}) => {
 
     const handleImgClickFullGame = (event) => {
         const gameId = event.currentTarget.getAttribute('data-value');
-        const endPoint = 'game?id=' + gameId;
-        requestApi(endPoint, false, true);
+        const url = 'game?id=' + gameId;
+        requestApi(url, false, true);
     };
 
     return (
