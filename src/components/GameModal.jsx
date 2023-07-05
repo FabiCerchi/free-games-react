@@ -28,7 +28,7 @@ const GameModal = ({ show, onHide, fullGame}) => {
                         <Row>
                             <Col className='p-1 mt-2 fs-6'>
                                 <h5>Description:</h5>
-                                <p style={{ height: '6rem', fontSize: '.8rem', overflow: 'hidden', textOverflow: 'ellipsis', }}>{fullGame.description}</p>
+                                <p className='modal-description'>{fullGame.description}</p>
                             </Col>
                         </Row>
                     </Modal.Body>

@@ -11,9 +11,9 @@ const FavoriteGame = ({ favGames, setFavGames, requestApi }) => {
 
     const handleImgClickFullGame = (event) => {
         const gameId = event.currentTarget.getAttribute('data-value');
-        const endPoint = 'game?id='+gameId;
-        requestApi(endPoint,false, true);
-      };
+        const endPoint = 'game?id=' + gameId;
+        requestApi(endPoint, false, true);
+    };
     return (
         <>
             <Button variant="outline-primary" onClick={handleShow} className="me-2">
@@ -27,15 +27,15 @@ const FavoriteGame = ({ favGames, setFavGames, requestApi }) => {
                 </Offcanvas.Header>
                 <Offcanvas.Body>
                     {favGames.map((game) => (
-                        <div key={game.id} style={{ height: '9rem' }} className='mt-1'>
+                        <div key={game.id} className='mt-1 favorite-game'>
                             <h5><strong>{game.title}</strong></h5>
                             <div className='d-flex'>
                                 <div className='gradle-container' data-value={game.id} onClick={handleImgClickFullGame}>
-                                    <img src={game.thumbnail} style={{ width: '10rem' }} />
+                                    <img src={game.thumbnail} alt='game_img' className='favorite-img' />
                                 </div>
                                 <div className='ms-2 d-flex flex-column'>
-                                    <div className='align-self-start' style={{ height: '4rem', width: '100%' }}>
-                                        <p style={{ height: '2.8rem', fontSize: '.6rem', overflow: 'hidden', textOverflow: 'ellipsis', }} className='m-0'>{game.short_description}</p>
+                                    <div className='align-self-start favorite-body'>
+                                        <p className='m-0 favorite-p'>{game.short_description}</p>
                                         <Badge bg="light text-dark">{game.platform}</Badge>
                                     </div>
                                     <div className='mt-2 d-flex justify-content-between align-items-end'>

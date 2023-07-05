@@ -3,6 +3,7 @@
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
+  height: 28rem;
 }
 
 .zoom-in {
@@ -38,10 +39,36 @@
 
 .favorite-button {
   transition: opacity 0.3s ease;
+  max-height: 1.4rem;
 }
 
 .favorite-button:hover {
   box-shadow: 0 0 10px 5px rgba(182, 182, 212, 0.5); /* Ajusta el color y la intensidad del brillo según tus preferencias */
+}
+
+.favorite-game {
+  height: 9rem;
+}
+
+.favorite-game .favorite-img {
+  width: 10rem;
+}
+
+.favorite-game .favorite-body{
+  height: 4rem;
+  width: 100%;
+}
+
+.favorite-body .favorite-p {
+  height: 2.8rem;
+  font-size: .6rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card-game {
+  min-height: 100%;
+
 }
 
 .custom-modal .modal-content {
@@ -55,4 +82,11 @@
 
 .custom-modal .modal-footer {
   border-top-color: white;
+}
+
+.custom-modal .modal-description{
+  height: 6rem;
+  font-size: .8rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

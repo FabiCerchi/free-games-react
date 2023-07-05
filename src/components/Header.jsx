@@ -70,7 +70,7 @@ const Header = ({ favGames, setFavGames, requestApi }) => {
                     </Navbar.Collapse>
                 </Container>
             </Navbar>
-            <div className="hero bg-dark text-light d-flex align-items-center text-center background border-bottom" style={{ height: '28rem' }}>
+            <div className="hero bg-dark text-light d-flex align-items-center text-center background border-bottom">
                 <Container>
                     <h1><strong>Good Game</strong></h1>
                 </Container>
