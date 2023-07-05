@@ -1,5 +1,6 @@
 import React from 'react';
 import { Modal, Button, ListGroup, Row, Col } from 'react-bootstrap';
+import logo from "../images/icon.png"
 const GameModal = ({ show, onHide, fullGame}) => {
     return (
         <>
@@ -7,7 +8,14 @@ const GameModal = ({ show, onHide, fullGame}) => {
                 <Modal centered size='lg' show={show} onHide={onHide} className='custom-modal'>
                     <Modal.Header closeButton>
                         <Modal.Title className='fs-5'>
-                            {fullGame.title}
+                        <img
+                            src={logo}
+                            width="30"
+                            height="30"
+                            className="d-inline-block align-top"
+                            alt="logo"
+                        />
+                            <span class="ms-2">{fullGame.title}</span>
                         </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
