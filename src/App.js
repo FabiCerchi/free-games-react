@@ -6,6 +6,7 @@ import { Col, Row, Container, Pagination } from 'react-bootstrap';
 import GameCard from './components/GameCard';
 import GameModal from './components/GameModal';
 import GameItem from './components/GameItem';
+import Footer from './components/Footer';
 
 function App() {
   // Api headers
@@ -191,7 +192,7 @@ function App() {
       </Container>
 
       {/* FOOTER */}
-
+      <Footer/>
     </>
   );
 }

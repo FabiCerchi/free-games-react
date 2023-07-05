@@ -16,6 +16,7 @@ const FavoriteButton = ({ game, favGames, setFavGames }) => {
         game.fav = false
         return game
     };
+    
     return (
         <>
             {
