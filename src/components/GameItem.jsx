@@ -2,7 +2,7 @@ import React from 'react';
 import FavoriteButton from './FavoriteButton';
 import { Badge, Row, Col, Container } from 'react-bootstrap';
 
-const GameItem = ({ game, favGames, setFavGames, requestApi }) => {
+const GameItem = ({ game, removeFavorite, addFavorite, requestApi}) => {
 
     const handleImgClickFullGame = (event) => {
         const gameId = event.currentTarget.getAttribute('data-value');
@@ -24,9 +24,10 @@ const GameItem = ({ game, favGames, setFavGames, requestApi }) => {
                             <div className='d-flex align-items-center justify-content-between'>
                                 <h4>{game.title} </h4>
                                 <FavoriteButton
-                                    favGames={favGames}
-                                    setFavGames={setFavGames}
-                                    game={game} />
+                                    removeFavorite={removeFavorite}
+                                    addFavorite={addFavorite}
+                                    game={game}
+                                />
                             </div>
                             <p>{game.short_description}</p>
                             <div wrap>
@@ -40,7 +41,7 @@ const GameItem = ({ game, favGames, setFavGames, requestApi }) => {
                         </div>
                     </Col>
                 </Row>
-            </Container >
+            </Container>
         </>
     );
 };

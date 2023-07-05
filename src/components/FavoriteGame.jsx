@@ -3,7 +3,7 @@ import { Button, Badge } from 'react-bootstrap';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import FavoriteButton from './FavoriteButton';
 
-const FavoriteGame = ({ favGames, setFavGames, requestApi }) => {
+const FavoriteGame = ({ addFavorite,removeFavorite, requestApi,favGames }) => {
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
@@ -17,12 +17,12 @@ const FavoriteGame = ({ favGames, setFavGames, requestApi }) => {
     return (
         <>
             <Button variant="outline-primary" onClick={handleShow} className="me-2">
-                Favoritos
+                Favorites
             </Button>
             <Offcanvas show={show} onHide={handleClose} placement='end' bg="dark" data-bs-theme="dark">
                 <Offcanvas.Header closeButton>
                     <Offcanvas.Title >
-                        <strong>Favoritos</strong>
+                        <strong>Favorites</strong>
                     </Offcanvas.Title>
                 </Offcanvas.Header>
                 <Offcanvas.Body>
@@ -41,8 +41,8 @@ const FavoriteGame = ({ favGames, setFavGames, requestApi }) => {
                                     <div className='mt-2 d-flex justify-content-between align-items-end'>
                                         <Badge bg="primary">{game.genre}</Badge>
                                         <FavoriteButton
-                                            favGames={favGames}
-                                            setFavGames={setFavGames}
+                                            removeFavorite={removeFavorite}
+                                            addFavorite={addFavorite}
                                             game={game}
                                         />
                                     </div>

@@ -1,9 +1,13 @@
 .background {
-  background-image: url("../images/bg-1.jpg");
+  background-image: linear-gradient(to bottom right, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url("../images/bg-1.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
   height: 28rem;
+}
+
+.nav-custom {
+  max-height: 10rem;
 }
 
 .zoom-in {

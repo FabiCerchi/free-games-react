@@ -2,8 +2,7 @@ import './App.css';
 import Header from './components/Header';
 import 'bootstrap/dist/css/bootstrap.css';
 import { React, useState, useEffect } from 'react';
-import { Col, Row, Container, Pagination } from 'react-bootstrap';
-import GameCard from './components/GameCard';
+import { Container, Pagination } from 'react-bootstrap';
 import GameModal from './components/GameModal';
 import GameItem from './components/GameItem';
 import Footer from './components/Footer';
@@ -17,6 +16,7 @@ function App() {
       'X-RapidAPI-Host': process.env.REACT_APP_API_HOST
     }
   };
+
   // LocalStorage para guardados en favoritos.
   const saveFavGames = JSON.parse(localStorage.getItem("favGames")) || [];
   const [favGames, setFavGames] = useState(saveFavGames);
@@ -25,27 +25,11 @@ function App() {
     localStorage.setItem("favGames", JSON.stringify(favGames))
   }, [saveFavGames]);
 
-  // Hook para los juegos recomendados por relevancia rnd.
-  const [recommendedGames, setRecommended] = useState([]);
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const responseRecommended = await fetch('https://free-to-play-games-database.p.rapidapi.com/api/games?sort-by=relevant', headers);
-        const dataRecommended = await responseRecommended.json();
-        const randomGamesRecommended = dataRecommended.sort(() => Math.random() - 0.5).slice(0, 3);
-        setRecommended(randomGamesRecommended)
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchData();
-  }, []);
-
   // Hook para cargar los juegos al ingresar.
   const [games, setGames] = useState([]);
+
   // Hook para titulo inicial
   const [gamesTitle, setGamesTitle] = useState('Random Popularity');
-
   // Use Efect para asignar los juegos al ingresar
   useEffect(() => {
     const fetchData = async () => {
@@ -53,7 +37,11 @@ function App() {
         const response = await fetch('https://free-to-play-games-database.p.rapidapi.com/api/games?sort-by=popularity', headers);
         const data = await response.json();
         const games = data.sort(() => Math.random() - 0.5);
-        setGames(games)
+        const gamesWithFav = games.map(game => ({
+          ...game,
+          fav: favGames.some(favGame => favGame.id === game.id)
+        }));
+        setGames(gamesWithFav)
       } catch (error) {
         console.log(error);
       }
@@ -62,21 +50,44 @@ function App() {
   }, []);
 
   //Filtros Category - Platform , SortBy
-  const requestApi = async (endPoint, title, modal) => {
+  const requestApi = async (url, title, modal) => {
     try {
-      const response = await fetch('https://free-to-play-games-database.p.rapidapi.com/api/' + endPoint, headers);
+      const response = await fetch('https://free-to-play-games-database.p.rapidapi.com/api/' + url, headers);
       const games = await response.json();
       if (modal) {
         setFullGame(games);
         handleOpenModal();
       } else {
+        const gamesWithFav = games.map(game => ({
+          ...game,
+          fav: favGames.some(favGame => favGame.id === game.id)
+        }));
         setGamesTitle(title);
         setCurrentPage(1)
-        setGames(games);
+        setGames(gamesWithFav);
       }
     } catch (error) {
       console.log(error)
     };
+  };
+
+  const addFavorite = (gameParam) => {
+    const favGame = favGames.filter(game => game.id === gameParam.id)
+    if (favGame.length === 0) {
+      gameParam.fav = true
+      setFavGames([...favGames, gameParam])
+    }
+  };
+
+  const removeFavorite = (gameParam) => {
+    const newFavGames = favGames.filter(game => game.id !== gameParam.id)
+    const newGames = games.find(game => game.id === gameParam.id)
+    if (newGames) {
+      // cambio el estado del juego en games
+      newGames.fav = false
+    }
+    setFavGames(newFavGames)
+    gameParam.fav = false
   };
 
   // Modal
@@ -114,6 +125,7 @@ function App() {
 
   return (
     <>
+      {/* MODAL */}
       {
         showModal && (
           <GameModal
@@ -123,76 +135,63 @@ function App() {
           />
         )
       }
+      {/* HEADER */}
       <Header
+        addFavorite={addFavorite}
+        removeFavorite={removeFavorite}
         favGames={favGames}
-        setFavGames={setFavGames}
         requestApi={requestApi}
       />
-      
-      {/* RECOMENDADOS */}
-      <Container className='mt-5 mb-5'>
-        <Row className="align-items-stretch mt-3">
-          <h3 className='container'><strong>Recommended</strong></h3>
-          {
-            recommendedGames.map((game) => (
-              <Col className='mt-2'>
-                <GameCard
-                  key={game.id}
-                  game={game}
-                  setFavGames={setFavGames}
-                  favGames={favGames}
-                  requestApi={requestApi}
-                />
-              </Col>
-            ))
-          }
-        </Row>
-      </Container>
 
       {/* GAME ITEMS */}
-      <h3 id="gameslist" className='container text-capitalize'><strong>{gamesTitle}</strong></h3>
-      <Container className='mt-3'>
-        {
-          currentGames.map((game) => (
-            <GameItem
-              key={game.id}
-              game={game}
-              setFavGames={setFavGames}
-              favGames={favGames}
-              requestApi={requestApi}
-            />
-          ))
-        }
+      <main id="gamelist" className='mt-5'>
+        <h3 className='container text-capitalize'><strong>{gamesTitle}</strong></h3>
+        <Container className='mt-3'>
+          {
+            currentGames.map((game) => (
+              <GameItem
+                key={game.id}
+                game={game}
+                addFavorite={addFavorite}
+                removeFavorite={removeFavorite}
+                games={games}
+                requestApi={requestApi}
+              />
+            ))
+          }
 
-        {/* PAGINADOR */}
-        <Container className='d-flex justify-content-center mt-4'>
-          <Pagination>
-            <Pagination.Prev
-              onClick={() => handlePageChange(currentPage - 1)}
-              disabled={currentPage === 1}
-            />
-            {Array.from({ length: endPage - startPage + 1 }).map((_, index) => {
-              const pageNumber = startPage + index;
-              return (
-                <Pagination.Item
-                  key={pageNumber}
-                  active={pageNumber === currentPage}
-                  onClick={() => handlePageChange(pageNumber)}
-                >
-                  {pageNumber}
-                </Pagination.Item>
-              );
-            })}
-            <Pagination.Next
-              onClick={() => handlePageChange(currentPage + 1)}
-              disabled={currentPage === totalPages}
-            />
-          </Pagination>
+          {/* PAGINADOR */}
+          <Container className='d-flex justify-content-center mt-4'>
+            <Pagination>
+              <Pagination.Prev
+                onClick={() => handlePageChange(currentPage - 1)}
+                disabled={currentPage === 1}
+              />
+              {Array.from({ length: endPage - startPage + 1 }).map((_, index) => {
+                const pageNumber = startPage + index;
+                return (
+                  <Pagination.Item
+                    key={pageNumber}
+                    active={pageNumber === currentPage}
+                    href="./index.html#gamelist"
+                    onClick={() => handlePageChange(pageNumber)}
+                  >
+                    {pageNumber}
+                  </Pagination.Item>
+                );
+              })}
+              <Pagination.Next
+                onClick={() => handlePageChange(currentPage + 1)}
+                href="./index.html#gamelist"
+                disabled={currentPage === totalPages}
+              />
+            </Pagination>
+          </Container>
         </Container>
-      </Container>
+      </main>
 
       {/* FOOTER */}
-      <Footer/>
+      <Footer />
     </>
   );
 }

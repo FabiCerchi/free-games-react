@@ -1,7 +1,7 @@
 import { Card, Badge, Stack } from 'react-bootstrap';
 import { React } from 'react';
-import FavoriteButton from './FavoriteButton';
-const GameCard = ({ game, favGames, setFavGames, requestApi }) => {
+{/* PARA IMPLEMENTAR DESPUES DEL MVP */}
+const GameCard = ({ game, requestApi}) => {
 
     const handleImgClickFullGame = (event) => {
         const gameId = event.currentTarget.getAttribute('data-value');
@@ -18,11 +18,6 @@ const GameCard = ({ game, favGames, setFavGames, requestApi }) => {
                 <Card.Body className='d-flex flex-column' >
                     <div className='d-flex justify-content-between'>
                         <Card.Title>{game.title}</Card.Title>
-                        <FavoriteButton
-                            favGames={favGames}
-                            setFavGames={setFavGames}
-                            game={game}
-                        />
                     </div>
                     <div className='mt-auto align-self-start'>
                         <Stack direction="horizontal" gap={1}>
